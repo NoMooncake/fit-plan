@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fit Plan</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Fit Plan</h1>
+      <p class="subtitle">Home training + meal guidance (CookUnity-based)</p>
+    </header>
+
+    <section class="card">
+      <h2>Setup</h2>
+
+      <div class="row">
+        <label>
+          Weight (kg)
+          <input id="weightKg" type="number" min="30" max="200" step="0.1" placeholder="e.g., 70" />
+        </label>
+
+        <label>
+          Training days / week
+          <select id="daysPerWeek">
+            <option value="3" selected>3 days</option>
+            <option value="4">4 days</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Goal
+          <select id="goal">
+            <option value="recomp" selected>Recomp (build muscle + stay similar weight)</option>
+            <option value="cut">Cut (lose fat + keep muscle)</option>
+            <option value="bulk">Lean bulk (gain muscle)</option>
+          </select>
+        </label>
+
+        <div class="hint">
+          <p><strong>Protein baseline:</strong> ~ 1.6 g/kg/day</p>
+          <p class="muted">This app uses rules of thumb (easy to follow) rather than exact calorie math.</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="generateBtn">Generate this week</button>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>This Week</h2>
+      <div id="summary" class="summary muted">Generate a plan to see your weekly schedule.</div>
+      <div id="plan"></div>
+    </section>
+
+    <footer class="muted">
+      <p>Data is stored locally in your browser (localStorage). No account, no tracking.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
