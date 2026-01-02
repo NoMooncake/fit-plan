@@ -10,16 +10,48 @@
   <main class="container">
     <header>
       <h1>Fit Plan</h1>
-      <p class="subtitle">Home training + meal guidance (CookUnity-based)</p>
+      <p class="subtitle">Home training + CookUnity meal planning (personal use)</p>
     </header>
 
     <section class="card">
-      <h2>Setup</h2>
+      <h2>Setup (more accurate)</h2>
 
       <div class="row">
         <label>
           Weight (kg)
-          <input id="weightKg" type="number" min="30" max="200" step="0.1" placeholder="e.g., 70" />
+          <input id="weightKg" type="number" min="30" max="200" step="0.1" placeholder="e.g., 71" />
+        </label>
+
+        <label>
+          Height (cm)
+          <input id="heightCm" type="number" min="120" max="220" step="1" placeholder="e.g., 175" />
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Age
+          <input id="ageYears" type="number" min="14" max="90" step="1" placeholder="e.g., 25" />
+        </label>
+
+        <label>
+          Sex
+          <select id="sex">
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Activity level (non-training)
+          <select id="activity">
+            <option value="1.2">Sedentary (desk most of day)</option>
+            <option value="1.375" selected>Light (some walking)</option>
+            <option value="1.55">Moderate (regular walking / active)</option>
+            <option value="1.725">High (very active)</option>
+          </select>
         </label>
 
         <label>
@@ -35,7 +67,7 @@
         <label>
           Goal
           <select id="goal">
-            <option value="recomp" selected>Recomp (build muscle + stay similar weight)</option>
+            <option value="recomp" selected>Recomp (build muscle + maintain)</option>
             <option value="cut">Cut (lose fat + keep muscle)</option>
             <option value="bulk">Lean bulk (gain muscle)</option>
           </select>
@@ -43,24 +75,82 @@
 
         <div class="hint">
           <p><strong>Protein baseline:</strong> ~ 1.6 g/kg/day</p>
-          <p class="muted">This app uses rules of thumb (easy to follow) rather than exact calorie math.</p>
+          <p class="muted">TDEE uses Mifflin-St Jeor + your activity level.</p>
         </div>
       </div>
 
       <div class="actions">
-        <button id="generateBtn">Generate this week</button>
+        <button id="generateBtn">Generate / Update</button>
         <button id="resetBtn" class="ghost">Reset</button>
       </div>
     </section>
 
     <section class="card">
-      <h2>This Week</h2>
+      <h2>Targets</h2>
+      <div id="targets" class="muted">Fill in weight/height/age then Generate / Update.</div>
+    </section>
+
+    <section class="card">
+      <h2>CookUnity Meal Pool (CSV)</h2>
+      <p class="muted">
+        Required headers: <code>name,type,kcal,protein</code> · type: training/rest/either
+      </p>
+
+      <div class="row">
+        <label>
+          Import CSV file
+          <input id="csvFile" type="file" accept=".csv,text/csv" />
+        </label>
+
+        <label>
+          Import mode
+          <select id="importMode">
+            <option value="replace" selected>Replace meal pool</option>
+            <option value="append">Append to existing</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Homemade ramen (times/week)
+          <input id="ramenCount" type="number" min="0" max="7" step="1" placeholder="e.g., 1" />
+        </label>
+
+        <label>
+          Ramen nutrition (kcal, protein g)
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <input id="ramenKcal" type="number" min="0" step="1" placeholder="kcal e.g., 500" />
+            <input id="ramenProtein" type="number" min="0" step="1" placeholder="protein e.g., 12" />
+          </div>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button id="importCsvBtn">Import CSV</button>
+        <button id="clearMealsBtn" class="ghost">Clear meals</button>
+      </div>
+
+      <div id="mealList" class="muted">No meals imported yet.</div>
+    </section>
+
+    <section class="card">
+      <h2>This Week (2 meals/day)</h2>
       <div id="summary" class="summary muted">Generate a plan to see your weekly schedule.</div>
       <div id="plan"></div>
+
+      <div class="actions" style="margin-top:12px;">
+        <button id="autoAssignBtn">Auto-assign Lunch + Dinner</button>
+        <button id="clearAssignmentsBtn" class="ghost">Clear assignments</button>
+      </div>
+
+      <p class="muted" style="margin-top:8px;">
+        No-repeat rule is applied when possible (best when you have ≥ 14 meals).
+      </p>
     </section>
 
     <footer class="muted">
-      <p>Data is stored locally in your browser (localStorage). No account, no tracking.</p>
+      <p>Everything is stored locally in your browser (localStorage). No account, no tracking.</p>
     </footer>
   </main>
 
